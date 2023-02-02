@@ -50,8 +50,8 @@ seperateElements := proc(input)
     local c, indc;
     local stillPart := 0;
     for indc, c in input do:
-        if c = "_" then
-            local lastFormelEnhed := StringTools[SubString](input,(indc-1)..length(input));
+        if (indc-1) < lengthOfInput and input[indc+1] = "_" then
+            local lastFormelEnhed := StringTools[SubString](input,(indc-stillPart)..length(input));
             ArrayTools[Append](newList, lastFormelEnhed);
             return newList;
         end if;
