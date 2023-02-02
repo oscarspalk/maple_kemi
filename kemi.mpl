@@ -48,7 +48,7 @@ seperateElements := proc(input)
     local lengthOfInput := length(input);
     local containsWeird := false;
     local c, indc;
-    local stillPart := false;
+    local stillPart := 0;
     for indc, c in input do:
         if c = "_" then
             local lastFormelEnhed := StringTools[SubString](input,(indc-1)..length(input));
@@ -56,17 +56,15 @@ seperateElements := proc(input)
             return newList;
         end if;
         if (indc-1) < lengthOfInput and StringTools[IsUpper](input[indc+1]) then
-            local whatToAdd;
-            if stillPart then
-                whatToAdd := cat(input[indc-1],c)
-            else:
-            whatToAdd := c 
-            end if;
+            local whatToAdd := "";
+            for i from 0 by 1 to stillPart do:
+                whatToAdd := cat( input[indc-i], whatToAdd);
+            end do;
             ArrayTools[Append](newList, whatToAdd);
             containsWeird := true;
-            stillPart := false;
+            stillPart := 0;
         else:
-            stillPart := true;
+            stillPart := stillPart + 1;
         end if;
     end do;
     if not(containsWeird) then
