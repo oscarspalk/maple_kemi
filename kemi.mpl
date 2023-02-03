@@ -7,19 +7,20 @@
 $define RANDINFO ':-Kemi'
 
 Kemi := module()
+description "Smarte kemi redskaber.";
 option package;
 
-export m, load, mol, gram;
+export M, load, mol, gram;
 
 local elements, extractElement, seperateElements, i, e;
 
 gram := proc(mol, formelEnhed)
-    local molecule := m(formelEnhed);
+    local molecule := M(formelEnhed);
     return mol*molecule;
 end proc;
 
 mol := proc(grams, formelEnhed)
-    local molecule := m(formelEnhed);
+    local molecule := M(formelEnhed);
     return grams/molecule;
 end proc;
 
@@ -34,7 +35,15 @@ extractElement := proc(val)
     else:
         local thisElement := StringTools[RegSplit]("__", val);
         element := thisElement[1];
-        amount := parse(thisElement[2]);
+        local nOfPotens := StringTools[Search]("^", thisElement[2]);
+        if nOfPotens = 0 then
+            amount := parse(thisElement[2]);
+        else:
+            local numberAndAmount := StringTools[RegSplit]("\\^", thisElement[2]);
+            local normalizedAmount := parse(numberAndAmount[1]);
+            local multiplier := parse(numberAndAmount[2]);
+            amount := parse(numberAndAmount[1]) * parse(numberAndAmount[2]);
+        end if;
     end if;
     local ind2, el;
     for ind2, el in elements do:
@@ -73,7 +82,8 @@ seperateElements := proc(input)
     return newList;
 end proc;
 
-m := proc(formelEnhed)
+M := proc(formelEnhed::algebraic)
+    description "Den molære masse for en angiven formelenhed.";
     local totalMass := 0;
     local elementList := Array([]);
     local input := String(formelEnhed);
