@@ -10,9 +10,12 @@ Kemi := module()
 description "Smarte kemi redskaber.";
 option package;
 
-export M, load, mol, gram;
+$include "C:\Users\knudi\Desktop\maple_kemi\automatik.mm"
 
-local elements, extractElement, seperateElements, i, e;
+export M, load, mol, gram, MM;
+
+local elements, extractElement, seperateElements, i, e, extractMolecule, v, dllM;
+
 
 gram := proc(mol, formelEnhed)
     local molecule := M(formelEnhed);
@@ -47,9 +50,8 @@ extractElement := proc(val)
     end if;
     local ind2, el;
     for ind2, el in elements do:
-        if el:-symbol = element then thisMass := thisMass + el:-atomic_mass*amount end if;
+        if el:-symbol = element then return Record('element'=el, 'amount'=amount) end if;
     end do;
-    return thisMass;
 end proc;
 
 seperateElements := proc(input)
@@ -82,11 +84,10 @@ seperateElements := proc(input)
     return newList;
 end proc;
 
-M := proc(formelEnhed::algebraic)
-    description "Den molære masse for en angiven formelenhed.";
-    local totalMass := 0;
+extractMolecule := proc(molecule)
     local elementList := Array([]);
-    local input := String(formelEnhed);
+    local itemsList := Array([]);
+    local input := String(molecule);
     local countDots := StringTools[Search]("*", input);
     if countDots = 0 then
         local runThrough := seperateElements(input);
@@ -105,12 +106,27 @@ M := proc(formelEnhed::algebraic)
     end if;
     local ind, val;
     for ind, val in elementList do:
-        totalMass := totalMass + extractElement(val)
+        ArrayTools[Append](itemsList, extractElement(val));
+    end do;
+    return itemsList;
+end proc;
+
+M := proc(formelEnhed::algebraic)
+    description "Den molære masse for en angiven formelenhed.";
+    local totalMass := 0;
+    local ments := extractMolecule(formelEnhed);
+    for i,v in ments do:
+        totalMass := totalMass + (v[element][atomic_mass]*v[amount]);
     end do;
     return totalMass;
 end proc;
 
+MM := proc(formelEnhed)
+    return dllM(String(formelEnhed));
+end proc;
+
 load := proc()
+    dllM := define_external('M', 'input'::string, 'RETURN'::string, 'LIB' = "C:/Users/knudi/source/repos/kemilib/x64/Debug/test.dll");
     local fil := "https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json";
     local data := JSON:-ParseFile(fil, output=record);
     elements := data:-elements;
