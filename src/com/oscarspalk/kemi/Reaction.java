@@ -1,12 +1,11 @@
 package com.oscarspalk.kemi;
 
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class Reaction {
-    List<Molecule> leftSide;
-    List<Molecule> rightSide;
+    final List<Molecule> leftSide;
+    final List<Molecule> rightSide;
 
     public Reaction(String leftSide, String rightSide) {
         this.leftSide = new ArrayList<>();
@@ -32,13 +31,13 @@ public class Reaction {
         return symbols;
     }
 
-    public static Map<String, Integer> joinMaps(List<Map<String, Integer>> maps, List<Integer> multipliers){
+    public static Map<String, Integer> joinMaps(List<Map<String, Integer>> maps, List<Integer> multipliers) {
         Map<String, Integer> total = new HashMap<>();
         int len = maps.size();
-        for(int i = 0; i < len; i++){
+        for (int i = 0; i < len; i++) {
             int multiplier = multipliers.get(i);
             maps.get(i).forEach((key, amount) -> {
-                int actualAmount = amount*multiplier;
+                int actualAmount = amount * multiplier;
                 if (total.containsKey(key)) {
                     total.put(key, actualAmount + total.get(key));
                 } else {
@@ -59,41 +58,39 @@ public class Reaction {
         }
         return output.toString();
     }
+
     public String balance(int depth) {
         int leftMoleculesLen = this.leftSide.size();
         int rightMoleculesLen = this.rightSide.size();
         List<Map<String, Integer>> leftSideMoleculesInSymbols = new ArrayList<>();
-        for(Molecule molecule : this.leftSide){
+        for (Molecule molecule : this.leftSide) {
             leftSideMoleculesInSymbols.add(countSymbolsInMolecule(molecule));
         }
         List<Map<String, Integer>> rightSideMoleculesInSymbols = new ArrayList<>();
-        for(Molecule molecule : this.rightSide){
+        for (Molecule molecule : this.rightSide) {
             rightSideMoleculesInSymbols.add(countSymbolsInMolecule(molecule));
         }
         List<List<Integer>> possibleMultipliers = new ArrayList<>();
-        generateCombos(new ArrayList<>(), depth, leftMoleculesLen + rightMoleculesLen, possibleMultipliers, allMultipliers -> {
+        generateCombos(new ArrayList<>() ,depth, leftMoleculesLen + rightMoleculesLen, possibleMultipliers, ( allMultipliers) -> {
             Map<String, Integer> leftSideCounts = joinMaps(leftSideMoleculesInSymbols,
                     allMultipliers.subList(0, leftMoleculesLen));
             Map<String, Integer> rightSideCounts = joinMaps(rightSideMoleculesInSymbols,
                     allMultipliers.subList(leftMoleculesLen, allMultipliers.size()));
 
-            if (leftSideCounts.equals(rightSideCounts)) {
-                return true;
-            }
-            return false;
+            return leftSideCounts.equals(rightSideCounts);
         });
-        if(possibleMultipliers.size() > 0){
+        if (possibleMultipliers.size() > 0) {
             List<Integer> fit = possibleMultipliers.get(0);
             return toStringWithMultipliers(leftSide, fit.subList(0, leftMoleculesLen)) + "="
                     + toStringWithMultipliers(rightSide,
-                   fit.subList(leftMoleculesLen, fit.size()));
+                    fit.subList(leftMoleculesLen, fit.size()));
         }
 
         return "No Match";
     }
 
     public static void generateCombos(List<Integer> currentList, int limit, int length, List<List<Integer>> listToAppend, Function<List<Integer>, Boolean> compare) {
-        if(listToAppend.size() > 0){
+        if (listToAppend.size() > 0) {
             return;
         }
         if (length == 0) {

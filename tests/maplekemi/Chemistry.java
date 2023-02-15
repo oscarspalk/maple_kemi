@@ -12,7 +12,7 @@ import java.util.Map;
 import org.junit.Test;
 
 public class Chemistry {
-	String path = "C:/Users/knudi/eclipse-workspace/maplekemi/elements.json";
+	final String path = "C:/Users/knudi/eclipse-workspace/maplekemi/elements.json";
 
 	@Test
 	public void testLoad() {
@@ -40,7 +40,7 @@ public class Chemistry {
 		Kemi.load(path);
 		assertEquals(1.0, Kemi.n(180.156000000000006, "C__6*H__12*O__6"));
 		assertEquals(1.0 * 2, Kemi.n(180.156000000000006 * 2, "C__6*H__12*O__6"));
-		assertEquals(1.0 * 0.0157, Kemi.n(180.156000000000006 * 0.0157, "C__6*H__12*O__6"));
+		assertEquals(0.0157, Kemi.n(180.156000000000006 * 0.0157, "C__6*H__12*O__6"));
 	}
 	
 	@Test

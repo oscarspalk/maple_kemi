@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Molecule {
-	List<ElementWithAmount> elements;
+	final List<ElementWithAmount> elements;
 
 	public Molecule(List<ElementWithAmount> elements) {
 		this.elements = elements;

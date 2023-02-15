@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Kemi {
-	static List<Element> elements = new ArrayList<>();
+	static final List<Element> elements = new ArrayList<>();
 
 	public static String load(String path) {
 		try {
@@ -101,8 +101,8 @@ public class Kemi {
 	}
 
 	public static String afstem(String leftSide, String rightSide, int depth) {
-		Reaction reaction = new Reaction(leftSide, rightSide);
-		return reaction.balance(depth);
+			Reaction reaction = new Reaction(leftSide, rightSide);
+			return reaction.balance(depth);
 	}
 
 	public static double M(String molecule) {
