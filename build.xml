@@ -1,0 +1,20 @@
+<project>
+	<target name="clean">
+		<delete dir="build"></delete>
+	</target>
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes">
+			<classpath>
+				<pathelement path="json.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="clean,compile">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/kemi.jar" basedir="build/classes">
+			<zipgroupfileset dir="" includes="json.jar"></zipgroupfileset>
+		</jar>
+	</target>
+</project>
