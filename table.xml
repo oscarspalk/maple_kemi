@@ -1,0 +1,18 @@
+<Table interior='all' id='_Table_' hiddenborderdisplay='worksheet' showinput='true' alignment='left' exterior='all' width='100%' showlabel='false' captionalignment='0' title='' drawtitle='false' order='row' drawcaption='false' randomized='false' captionposition='1' showgroup='false' plotalignlists='' pagebreak='none' postexecute='advance'>
+	<Table-Column separator='true' weight='100' />
+	<Table-Row align='top' separator='true'>
+		<Table-Cell columnspan='1' backgroundstyle='0' rowspan='1' fillcolor='[255,255,255]' visible='true'>
+			<Text-field alignment='centred' style='Text' layout='Normal'>Hello World</Text-field>
+		</Table-Cell>
+	</Table-Row>
+	<Table-Row align='top' separator='true'>
+		<Table-Cell columnspan='1' backgroundstyle='0' rowspan='1' fillcolor='[255,255,255]' visible='true'>
+			<Text-field alignment='centred' style='Text' layout='Normal'>Hello World</Text-field>
+		</Table-Cell>
+	</Table-Row>
+	<Table-Row align='top' separator='true'>
+		<Table-Cell columnspan='1' backgroundstyle='0' rowspan='1' fillcolor='[255,255,255]' visible='true'>
+			<Text-field alignment='centred' style='Text' layout='Normal'>Hello World</Text-field>
+		</Table-Cell>
+	</Table-Row>
+</Table>

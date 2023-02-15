@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Chemistry</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">maplekemi</a>
+</div>
+
+<h1>Coverage Summary for Class: Chemistry (maplekemi)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Chemistry</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package maplekemi;
+&nbsp;
+&nbsp;import com.oscarspalk.kemi.Kemi;
+&nbsp;import com.oscarspalk.kemi.Molecule;
+&nbsp;import com.oscarspalk.kemi.Reaction;
+&nbsp;
+&nbsp;import static junit.framework.Assert.assertEquals;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;import org.junit.Test;
+&nbsp;
+<b class="fc">&nbsp;public class Chemistry {</b>
+<b class="fc">&nbsp;	String path = &quot;C:/Users/knudi/eclipse-workspace/maplekemi/elements.json&quot;;</b>
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testLoad() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testM() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+<b class="fc">&nbsp;		assertEquals(180.156000000000006, Kemi.M(&quot;C__6*H__12*O__6&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(2678.00717199999963, Kemi.M(&quot;U__4*Ag__16&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(45.0170000000000030, Kemi.M(&quot;COOH&quot;));</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testm() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+<b class="fc">&nbsp;		assertEquals(180.156000000000006, Kemi.m(1.0, &quot;C__6*H__12*O__6&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(180.156000000000006 * 2, Kemi.m(2.0, &quot;C__6*H__12*O__6&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(180.156000000000006 * 0.157, Kemi.m(0.157, &quot;C__6*H__12*O__6&quot;));</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Test
+&nbsp;	public void testn() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+<b class="fc">&nbsp;		assertEquals(1.0, Kemi.n(180.156000000000006, &quot;C__6*H__12*O__6&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(1.0 * 2, Kemi.n(180.156000000000006 * 2, &quot;C__6*H__12*O__6&quot;));</b>
+<b class="fc">&nbsp;		assertEquals(1.0 * 0.0157, Kemi.n(180.156000000000006 * 0.0157, &quot;C__6*H__12*O__6&quot;));</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testReactionCountSymbols() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+<b class="fc">&nbsp;		Molecule molecule = Kemi.extractMolecule(&quot;H__2*O__2&quot;);</b>
+<b class="fc">&nbsp;		Map&lt;String, Integer&gt; symbols = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;		symbols.put(&quot;H&quot;, 2);</b>
+<b class="fc">&nbsp;		symbols.put(&quot;O&quot;, 2);</b>
+<b class="fc">&nbsp;		assertEquals(symbols, Reaction.countSymbolsInMolecule(molecule));</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	@Test
+&nbsp;	public void testBalance() {
+<b class="fc">&nbsp;		Kemi.load(path);</b>
+<b class="fc">&nbsp;		Reaction reaction = new Reaction(&quot;C__6*H__12*O__6+O__2&quot;, &quot;CO__2+H__2*O&quot;);</b>
+<b class="fc">&nbsp;		Reaction reaction2 = new Reaction(&quot;C__8*H__7*N+O__2&quot;, &quot;H__2*O+CO__2+NO&quot;);</b>
+<b class="fc">&nbsp;		assertEquals(&quot;C__6*H__12*O__6+6*O__2=6*CO__2+6*H__2*O&quot;, reaction.balance(10));</b>
+<b class="fc">&nbsp;		assertEquals(&quot;&quot;, reaction2.balance(30));</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-15 03:18</div>
+</div>
+</body>
+</html>
