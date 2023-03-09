@@ -1,7 +1,7 @@
 Kemi := module()
 description "For kemi.";
 option package;
-export load, M, afstem, tabular;
+export load, M, afstem, tabular, m,n;
 
 local libLoad, classPath, elementsPath, libM, libAfstem;
 
@@ -14,6 +14,16 @@ end proc;
 
 M := proc(input)
 	return libM(String(input))
+end proc;
+
+m := proc(mol, formelEnhed)
+    local molecule := M(formelEnhed);
+    return mol*molecule;
+end proc;
+
+n := proc(grams, formelEnhed)
+    local molecule := M(formelEnhed);
+    return grams/molecule;
 end proc;
 
 load := proc()
